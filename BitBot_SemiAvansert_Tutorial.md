@@ -117,7 +117,7 @@ input.onGesture(Gesture.Shake, function () {
 
 Lag en ny ``||functions: Funksjon||`` du kaller "SendData". Inni her skal vi sende radiomeldingene med informasjon fra fjernkontrollen til bit:bot-bilen.
 
-Bruk "radio send verdi" for å sende verdien til AV/PÅ, Knapp A og B, og helningsvinkelen over til bilen. Gi hver av dem en bokstav, og sende med variabelen som hører til.
+Bruk ``||radio: radio send verdi||`` for å sende verdien til AV/PÅ, Knapp A og B, og helningsvinkelen over til bilen. Gi hver av dem en bokstav, og sende med variabelen som hører til.
 
 |   Variabel (verdi)   ||||||   Bokstav (navn)   |
 | :------------: |||||| :------------: |
@@ -126,3 +126,57 @@ Bruk "radio send verdi" for å sende verdien til AV/PÅ, Knapp A og B, og helnin
 | Knapp_B |||||| B |
 | Hastighet |||||| H |
 
+Kall opp ``||functions: SendData||`` fra blokken ``||basic: gjenta for alltid||``.
+
+```blocks
+function SendData () {
+    let Hastighet = 0
+    let Knapp_B = 0
+    let Knapp_A = 0
+    let PåAv = 0
+    radio.sendValue("P", PåAv)
+    radio.sendValue("A", Knapp_A)
+    radio.sendValue("B", Knapp_B)
+    radio.sendValue("H", Hastighet)
+}
+basic.forever(function () {
+    SendData()
+})
+```
+
+## Steg 8 @unplugged
+
+### Programmere bit:bot-bilen
+
+Gratulerer! du er nå ferdig med den delen av koden som skal være på fjernkontrollen. Vi er nå klare for å lage den delen av koden som skal styre bit:bot-bilen!
+
+![Bitbot-bil.png](https://i.postimg.cc/fWqWwHTG/Bitbot-bil.png)
+
+
+## Steg 9
+
+### Motta radio fra fjernkontrollen
+
+Inne i blokken ``||radio: når radio mottar "name" value||``: Lag en hvis-betingelse som sjekker opp bokstavene vi sendte fra fjernkontrollen. Vi skal lage 4 nye variabler som kan huske verdiene vi sendte. Disse må koble sammen med riktig navn og verdi.
+
+- ``||logic: Hvis||`` "name" = P, sett ``||variables: PåAv_Bil||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = A, sett ``||variables: Venstre||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = B, sett ``||variables: Høyre||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = H, sett ``||variables: Kjør||`` til "``||variables: value||``.
+
+```blocks
+let PåAv_Bil = 0
+let Venstre = 0
+let Kjør = 0
+radio.onReceivedValue(function (name, value) {
+    if (name == "P") {
+        PåAv_Bil = value
+    } else if (name == "A") {
+        Venstre = value
+    } else if (name == "B") {
+        Venstre = value
+    } else if (name == "H") {
+        Kjør = value
+    }
+})
+```
