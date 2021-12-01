@@ -182,7 +182,41 @@ radio.onReceivedValue(function (name, value) {
 ```
 ## Steg 10
 
-helningsvinkel
+### Omregning mellom helningsvinkel og hastighet
+
+For variabelen ``||variables: Kjør||`` som mottar verdien til helningsvinkelen til fjernkontrollen, trenger vi å gjøre en omregning. 
+
+Verdien til ``||variables: Kjør||`` som vi mottar går fra -45 til +45, mens farten til motorene går fra +1023 til -1023. 
+
+Finn ut hvilket tall du må gange ``||variables: value||`` med for at hastigheten til bilen skal bli riktig.
+
+|   Helningsvinkel   ||||||   Hastighet   |
+| :------------: |||||| :------------: |
+| -45 |||||| 1023 |
+| 0 |||||| 0 |
+| 45 |||||| -1023 |
+
+```blocks
+let PåAv_Bil = 0
+let Venstre = 0
+let Høyre = 0
+let Kjør = 0
+radio.onReceivedValue(function (name, value) {
+    if (name == "P") {
+        PåAv_Bil = value
+    } else if (name == "A") {
+        Venstre = value
+    } else if (name == "B") {
+        Høyre = value
+    } else if (name == "H") {
+        Kjør = value * -22.7
+    }
+})
+```
+
+## Steg 11
+
+### 
 
 ```blocks
 basic.forever(function () {
