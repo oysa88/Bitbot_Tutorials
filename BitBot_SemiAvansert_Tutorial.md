@@ -1,5 +1,7 @@
 # BitBot SemiAvansert - Tutorial
 
+### diffs true
+
 ## Steg 1 @unplugged
 
 ### SemiAvansert Bitbot med hastighetsjustering
@@ -24,10 +26,12 @@ Vi skal starte å lage fjernkontrollen som skal styre bilen. Vi skal bruke helni
 
 ### Sette opp egen radiogruppe
 
-Inni ``||basic: ved start||``: Sett opp egen radiogruppe``||radio: radio sett gruppe||`` slik at fjernkontroll og bil kan snakke sammen.
+Inni ``||basic: ved start||``: Sett opp egen ``||radio: radiogruppe||`` slik at fjernkontroll og bil kan snakke sammen.
+
+Du får utdelt hvilken ``||radio: radiogruppe||`` du skal bruke fra læreren.
 
 ```blocks
-radio.setGroup(1)
+radio.setGroup()
 ```
 
 ## Steg 4
@@ -49,4 +53,35 @@ function Fjernkontroll () {
 basic.forever(function () {
     Fjernkontroll()
 })
+```
+
+## Steg 5
+
+### Sette opp kontroll av knappene
+
+Vi skal bruke ``||input: knapp A||`` for å få bilen til å svinge til venstre og ``||input: knapp B||`` for å svinge til høyre.
+
+Lag en ``||variables: variabel||`` som kan huske på om du trykker på ``||input: knapp B||`` på micro:biten, f.eks: "Knapp_A". Sett variabelen til 1 hvis knappen trykkes ned, ellers la variabelen være 0. Gjør det samme for ``||input: knapp B||``.
+
+```blocks
+let Hastighet = 0
+let Knapp_A = 0
+let Knapp_B = 0
+function Fjernkontroll () {
+    Hastighet = input.rotation(Rotation.Pitch)
+    if (input.buttonIsPressed(Button.A)) {
+        Knapp_A = 1
+    } else {
+        Knapp_A = 0
+    }
+    if (input.buttonIsPressed(Button.B)) {
+        Knapp_B = 1
+    } else {
+        Knapp_B = 0
+    }
+}
+basic.forever(function () {
+    Fjernkontroll()
+})
+
 ```
