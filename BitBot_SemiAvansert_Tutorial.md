@@ -94,10 +94,10 @@ Vi skal lage en funksjon som skrur bilen AV eller PÅ hver gang du ``||input: ri
 
 Lag en ``||variables: variabel||`` som du kaller "PåAv": Sett ``||variables: PåAv||`` til å være 1 hvis ``||variables: PåAv||`` = 0, ellers sett ``||variables: PåAv||`` = 0.
 
-|   Status Bil   |   Verdi   |
-| :------------: | :------------: |
-| PÅ | 1 |
-| AV | 0 |
+|   Status Bil   ||||||   Verdi   |
+| :------------: |||||| :------------: |
+| PÅ |||||| 1 |
+| AV |||||| 0 |
 
 
 ```blocks
@@ -119,10 +119,10 @@ Lag en ny ``||functions: Funksjon||`` du kaller "SendData". Inni her skal vi sen
 
 Bruk "radio send verdi" for å sende verdien til AV/PÅ, Knapp A og B, og helningsvinkelen over til bilen. Gi hver av dem en bokstav, og sende med variabelen som hører til.
 
-|   Variabel (verdi)   |   Bokstav (navn)   |
-| :------------: | :------------: |
-| ``||variables: PåAv||`` | P |
-| ``||variables: Knapp_A||`` | A |
-| ``||variables: Knapp_B||`` | B |
-| ``||variables: Hastighet||`` | H |
+|   Variabel (verdi)   ||||||   Bokstav (navn)   |
+| :------------: |||||| :------------: |
+| PåAv |||||| P |
+| Knapp_A |||||| A |
+| Knapp_B |||||| B |
+| Hastighet |||||| H |
 
