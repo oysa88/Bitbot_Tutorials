@@ -180,3 +180,16 @@ radio.onReceivedValue(function (name, value) {
     }
 })
 ```
+## Steg 10
+
+helningsvinkel
+
+```blocks
+basic.forever(function () {
+    bitbot.motor(BBMotor.Left, 1023)
+})
+```
+
+```package
+BitBot=github:4tronix/bitbot#1.5.2
+```
