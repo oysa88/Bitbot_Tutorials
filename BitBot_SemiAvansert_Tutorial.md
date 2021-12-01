@@ -1,6 +1,6 @@
 # BitBot SemiAvansert - Tutorial
 
-### diffs true
+### @diffs true
 
 ## Steg 1 @unplugged
 
@@ -19,7 +19,7 @@ Følg instruksjonen videre for å løse oppgaven.
 
 Vi skal starte å lage fjernkontrollen som skal styre bilen. Vi skal bruke helningsvinkelen til micro:biten som gasspedal for bilen. Dvs. at jo mer vi heller micro:biten, jo mer fart skal bilen ha. Vi skal også bruke knapp A og B for å svinge bit:bot.
 
-![microbit-pitch.png](https://i.postimg.cc/prxFZftV/microbit-pitch.png)
+![microbit-pitch-500px.png](https://i.postimg.cc/136y9LqT/microbit-pitch-500px.png)
 
 
 ## Steg 3
@@ -85,3 +85,44 @@ basic.forever(function () {
 })
 
 ```
+
+## Steg 6
+
+### Skru bilen Av og på
+
+Vi skal lage en funksjon som skrur bilen AV eller PÅ hver gang du ``||input: rister||`` på micro:biten. 
+
+Lag en ``||variables: variabel||`` som du kaller "PåAv": Sett ``||variables: PåAv||`` til å være 1 hvis ``||variables: PåAv||`` = 0, ellers sett ``||variables: PåAv||`` = 0.
+
+|   Status Bil   |   Verdi   |
+| :------------: | :------------: |
+| PÅ | 1 |
+| AV | 0 |
+
+
+```blocks
+let PåAv = 0
+input.onGesture(Gesture.Shake, function () {
+    if (PåAv == 0) {
+        PåAv = 1
+    } else {
+        PåAv = 0
+    }
+})
+```
+
+## Steg 7
+
+### Sende data til bit:bot-bilen
+
+Lag en ny ``||functions: Funksjon||`` du kaller "SendData". Inni her skal vi sende radiomeldingene med informasjon fra fjernkontrollen til bit:bot-bilen.
+
+Bruk "radio send verdi" for å sende verdien til AV/PÅ, Knapp A og B, og helningsvinkelen over til bilen. Gi hver av dem en bokstav, og sende med variabelen som hører til.
+
+|   Variabel (verdi)   |   Bokstav (navn)   |
+| :------------: | :------------: |
+| ``||variables: PåAv||`` | P |
+| ``||variables: Knapp_A||`` | A |
+| ``||variables: Knapp_B||`` | B |
+| ``||variables: Hastighet||`` | H |
+
