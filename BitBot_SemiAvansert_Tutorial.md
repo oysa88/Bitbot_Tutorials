@@ -67,7 +67,7 @@ Lag en ``||variables: variabel||`` som kan huske på om du trykker på ``||input
 let Hastighet = 0
 let Knapp_A = 0
 let Knapp_B = 0
-function Fjernkontroll () {
+function Fjernkontroll() {
     Hastighet = input.rotation(Rotation.Pitch)
     if (input.buttonIsPressed(Button.A)) {
         Knapp_A = 1
