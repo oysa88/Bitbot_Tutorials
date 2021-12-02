@@ -6,9 +6,9 @@
 
 ### SemiAvansert Bitbot med hastighetsjustering
 
-I denne oppgaven skal dere lage et program som skal brukes på to micro:biter: En som skal brukes som fjernkontroll og en som skal styre bil:bit-bilen.
+I denne veiledningen skal dere lage et program som skal brukes på to micro:biter: En som skal brukes som fjernkontroll og en som skal styre bil:bit-bilen.
 
-Følg instruksjonen videre for å løse oppgaven.
+**Følg instruksjonen videre for å løse oppgaven.**
 
 ![microbit-bitbot-radio-800px.jpg](https://i.postimg.cc/hG6BTbSZ/microbit-bitbot-radio-800px.jpg)
 
@@ -28,7 +28,7 @@ Vi skal starte å lage fjernkontrollen som skal styre bilen. Vi skal bruke helni
 
 Inni ``||basic: ved start||``: Sett opp egen ``||radio: radiogruppe||`` slik at fjernkontroll og bil kan snakke sammen.
 
-Du får utdelt hvilken ``||radio: radiogruppe||`` du skal bruke fra læreren.
+*(Du får utdelt hvilken ``||radio: radiogruppe||`` du skal bruke fra læreren.)*
 
 ```blocks
 radio.setGroup()
@@ -61,7 +61,7 @@ basic.forever(function () {
 
 Vi skal bruke ``||input: knapp A||`` for å få bilen til å svinge til venstre og ``||input: knapp B||`` for å svinge til høyre.
 
-Lag en ``||variables: variabel||`` som kan huske på om du trykker på ``||input: knapp B||`` på micro:biten, f.eks: "Knapp_A". Sett variabelen til 1 hvis knappen trykkes ned, ellers la variabelen være 0. Gjør det samme for ``||input: knapp B||``.
+Lag en ``||variables: variabel||`` som kan huske på om du trykker på ``||input: knapp A||`` på micro:biten, f.eks: "Knapp_A". Sett variabelen til 1 hvis knappen trykkes ned, ellers la variabelen være 0. Gjør det samme for ``||input: knapp B||``.
 
 ```blocks
 let Hastighet = 0
@@ -88,9 +88,9 @@ basic.forever(function () {
 
 ## Steg 6
 
-### Skru bilen Av og på
+### Skru bilen Av og På
 
-Vi skal lage en funksjon som skrur bilen AV eller PÅ hver gang du ``||input: rister||`` på micro:biten. 
+Vi skal lage en funksjon som skrur bilen AV eller PÅ hver gang du ``||input: rister||`` på fjernkontrollen.
 
 Lag en ``||variables: variabel||`` som du kaller "PåAv": Sett ``||variables: PåAv||`` til å være 1 hvis ``||variables: PåAv||`` = 0, ellers sett ``||variables: PåAv||`` = 0.
 
@@ -148,7 +148,9 @@ basic.forever(function () {
 
 ### Programmere bit:bot-bilen
 
-Gratulerer! du er nå ferdig med den delen av koden som skal være på fjernkontrollen. Vi er nå klare for å lage den delen av koden som skal styre bit:bot-bilen!
+**Gratulerer!** Du er nå ferdig med den delen av koden som skal være på fjernkontrollen. 
+
+Vi er nå klare for å lage den delen av koden som skal styre bit:bot-bilen!
 
 ![Bitbot-bil.png](https://i.postimg.cc/fWqWwHTG/Bitbot-bil.png)
 
@@ -216,12 +218,149 @@ radio.onReceivedValue(function (name, value) {
 
 ## Steg 11
 
-### 
+### Styre Bit:Bot i egen funksjon
+
+Lag ``||functions: funksjonen||`` "BitBot_Bilen". Inni funksjonen: La bilen kun få lov til å kjøre hvis ``||variables: PåAv_Bil||`` er lik 1. Ellers skal vi kjøre ``||arrays: begge motorene||`` med fart 0.
+
+Kall opp ``||functions: BitBot_Bilen||`` fra blokken ``||basic: gjenta for alltid||``.
 
 ```blocks
+function BitBot_Bilen () {
+    let PåAv_Bil = 0
+    if (PåAv_Bil == 1) {
+    	
+    } else {
+        bitbot.motor(BBMotor.Both, 0)
+    }
+}
 basic.forever(function () {
-    bitbot.motor(BBMotor.Left, 1023)
+    BitBot_Bilen()
 })
+```
+
+## Steg 12
+
+### Få bilen til å svinge
+
+Inni ``||functions: BitBot_Bilen||``, hvis ``||variables: PåAv_Bil||`` = 1:
+
+- ``||logic: Hvis||`` ``||variables: Venstre||`` = 1, kjør ``||arrays: høyre motor||`` med farten vi får fra ``||variables: Kjør||``, og ``||arrays: venstre motor||`` med farten vi får fra ``||variables: Kjør||`` ``||math: * -1||``.
+- ``||logic: Hvis||`` ``||variables: Høyre||`` = 1, kjør ``||arrays: venstre motor||`` med farten vi får fra ``||variables: Kjør||``, og ``||arrays: høyre motor||`` med farten vi får fra ``||variables: Kjør||`` ``||math: * -1||``.
+- ``||logic: Ellers||``, kjør ``||arrays: begge motorene||`` med farten vi får fra ``||variables: Kjør||``.
+
+```blocks
+function BitBot_Bilen () {
+    let PåAv_Bil = 0
+    let Venstre = 0
+    let Høyre = 0
+    let Kjør = 0
+    if (PåAv_Bil == 1) {
+        if (Venstre == 1) {
+            bitbot.motor(BBMotor.Right, Kjør)
+            bitbot.motor(BBMotor.Left, Kjør * -1)
+        }else if (Venstre == 1) {
+            bitbot.motor(BBMotor.Left, Kjør)
+            bitbot.motor(BBMotor.Right, Kjør * -1)
+        } else {
+            bitbot.motor(BBMotor.Both, Kjør)
+        }
+    } else {
+        bitbot.motor(BBMotor.Both, 0)
+    }
+}
+basic.forever(function () {
+    BitBot_Bilen()
+})
+```
+
+## Steg 13
+
+### Sette opp lys på bilen
+
+Legg til lys på BitBot-bilen slik du ønsker det!
+
+Når du er ferdig med det, ``||math: Last ned||`` koden til begge micro:bitene, og test koden på en bit:bot for å se at den funker som den skal.
+
+**Lykke til!**
+
+*(Se hint for hvordan komplett kode ser ut.)*
+
+```blocks
+let PåAv = 0
+let Knapp_A = 0
+let Knapp_B = 0
+let Hastighet = 0
+let PåAv_Bil = 0
+let Venstre = 0
+let Høyre = 0
+let Kjør = 0
+radio.setGroup(1)
+bitbot.ledRainbow()
+basic.forever(function () {
+    Fjernkontroll()
+    SendInfo()
+    BitBot_Bilen()
+})
+function Fjernkontroll() {
+    Hastighet = input.rotation(Rotation.Pitch)
+    if (input.buttonIsPressed(Button.A)) {
+        Knapp_A = 1
+    } else {
+        Knapp_A = 0
+    }
+    if (input.buttonIsPressed(Button.B)) {
+        Knapp_B = 1
+    } else {
+        Knapp_B = 0
+    }
+}
+function SendInfo() {
+    radio.sendValue("P", PåAv)
+    radio.sendValue("A", Knapp_A)
+    radio.sendValue("B", Knapp_B)
+    radio.sendValue("H", Hastighet)
+}
+radio.onReceivedValue(function (name, value) {
+    if (name == "P") {
+        PåAv_Bil = value
+    } else if (name == "A") {
+        Venstre = value
+    } else if (name == "B") {
+        Høyre = value
+    } else if (name == "H") {
+        Kjør = value * -22.7
+    }
+})
+function BitBot_Bilen() {
+    if (PåAv_Bil == 1) {
+        let Kjør = 0
+        let Venstre = 0
+        if (Venstre == 1) {
+            bitbot.motor(BBMotor.Right, Kjør)
+            bitbot.motor(BBMotor.Left, Kjør * -1)
+        } else if (Venstre == 1) {
+            bitbot.motor(BBMotor.Left, Kjør)
+            bitbot.motor(BBMotor.Right, Kjør * -1)
+        } else {
+            bitbot.motor(BBMotor.Both, Kjør)
+        }
+    } else {
+        bitbot.motor(BBMotor.Both, 0)
+    }
+}
+```
+
+## Steg 14
+
+### Legger med ekstra blokker her...
+
+```blocks
+basic.pause(100)
+basic.showIcon(IconNames.Heart)
+bitbot.setLedColor(0xFF0000)
+bitbot.setPixelColor(0, 0xFF0000)
+bitbot.ledRainbow()
+bitbot.ledRotate()
 ```
 
 ```package
