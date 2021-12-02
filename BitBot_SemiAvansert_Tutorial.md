@@ -40,7 +40,7 @@ radio.setGroup()
 
 Gå til Avansert, under ``||functions: Funksjoner||``, lag en ny funksjon du kaller "Fjernkontroll". 
 
-Inni her skal vi lag en ny ``||variables: variabel||`` som skal brukes til å huske hva ``||input: helningsvinkel fremover-bakover||`` er. 
+Inni her skal vi lag en ny ``||variables: variabel||`` som skal brukes til å huske hva ``||input: helningsvinkel forover-bakover||`` er. 
 
 - Kall ``||variables: variabelen||`` "Hastighet" og sett den til å lese hva ``||input: helningsvinkel fremover-bakover||`` er. 
 - Kall opp ``||functions: Fjernkontroll||`` fra blokken ``||basic: gjenta for alltid||``.
