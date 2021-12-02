@@ -14,7 +14,8 @@
         "README.md",
         "Bitbot_Vanlig_Tutorial.md",
         "BitBot_SemiAvansert_Tutorial.md",
-        "BitBot_Avansert_Tutorial.md"
+        "BitBot_Avansert_Tutorial.md",
+        "tutorial-info-cache.json"
     ],
     "testFiles": [
         "test.ts"
