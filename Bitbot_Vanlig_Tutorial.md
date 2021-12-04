@@ -107,11 +107,11 @@ Vi er nå klare for å lage den delen av koden som skal styre bit:bot-bilen!
 
 Inne i blokken ``||radio: når radio mottar "ReceivedNumber"||``: Lag en ``||logic: hvis-betingelse||`` som sjekker opp tallene vi sendte fra fjernkontrollen. 
 
-- ``||logic: Hvis||`` ``||radio: ReceivedNumber = 1||``, ``||arrays: snu til venstre med fart||`` 60%-100%.
-- ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 2||``, ``||arrays: snu til høyre med fart||`` 60%-100%.
-- ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 3||``, ``||arrays: kjør forover med fart||`` 60%-100%.
-- ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 4||``, ``||arrays: kjør bakover med fart||`` 60%-100%.
-- ``||logic: Ellers||``, ``||arrays: kjør forover med fart||`` 0%.
+- ``||logic: Hvis||`` ``||radio: ReceivedNumber = 1||``, ``||bitbot: snu til venstre med fart||`` 60%-100%.
+- ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 2||``, ``||bitbot: snu til høyre med fart||`` 60%-100%.
+- ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 3||``, ``||bitbot: kjør forover med fart||`` 60%-100%.
+- ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 4||``, ``||bitbot: kjør bakover med fart||`` 60%-100%.
+- ``||logic: Ellers||``, ``||bitbot: kjør forover med fart||`` 0%.
 
 ```blocks
 radio.onReceivedNumber(function (receivedNumber) {
