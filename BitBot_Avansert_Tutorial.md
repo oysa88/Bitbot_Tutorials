@@ -4,7 +4,7 @@
 
 ## Steg 1 @unplugged
 
-### Avansert Bitbot med hastighetsjustering
+### Avansert Bitbot som styres med helningsvinkel i to retninger
 
 I denne veiledningen skal dere lage et program som skal brukes på to micro:biter: En som skal brukes som fjernkontroll og en som skal styre bil:bit-bilen.
 
@@ -129,57 +129,50 @@ Vi er nå klare for å lage den delen av koden som skal styre bit:bot-bilen!
 
 Inne i blokken ``||radio: når radio mottar "name" value||``: Lag en hvis-betingelse som sjekker opp bokstavene vi sendte fra fjernkontrollen. Vi skal lage 3 nye variabler som kan huske verdiene vi sendte. Disse må koble sammen med riktig navn og verdi.
 
-- ``||logic: Hvis||`` "name" = P, sett ``||variables: PåAv_Bil||`` til "``||variables: value||``.
-- ``||logic: Hvis||`` "name" = A, sett ``||variables: Venstre||`` til "``||variables: value||``.
-- ``||logic: Hvis||`` "name" = B, sett ``||variables: Høyre||`` til "``||variables: value||``.
-- ``||logic: Hvis||`` "name" = H, sett ``||variables: Kjør||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = P, sett ``||variables: Pitch||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = A, sett ``||variables: AvPå||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = R, sett ``||variables: Roll||`` til "``||variables: value||``.
+
 
 ```blocks
-let PåAv_Bil = 0
-let Venstre = 0
+let AvPå_Bil = 0
 let Kjør = 0
+let Svinge = 0
 radio.onReceivedValue(function (name, value) {
     if (name == "P") {
-        PåAv_Bil = value
-    } else if (name == "A") {
-        Venstre = value
-    } else if (name == "B") {
-        Venstre = value
-    } else if (name == "H") {
         Kjør = value
+    } else if (name == "A") {
+        AvPå_Bil = value
+    } else if (name == "R") {
+        Svinge = value
     }
 })
 ```
 ## Steg 9
 
-### Omregning mellom helningsvinkel og hastighet
+### Omregning mellom fjernkontroll og bit:bot
 
-For variabelen ``||variables: Kjør||`` som mottar verdien til helningsvinkelen til fjernkontrollen, trenger vi å gjøre en omregning. 
+``||input: Helningsvinklene||`` fra fjernkontrollen går fra -45 til +45 grader, mens farten til motorene går fra +1023 til -1023.
 
-Verdien til ``||variables: Kjør||`` som vi mottar går fra -45 til +45, mens farten til motorene går fra +1023 til -1023. 
+For variablene ``||variables: Kjør||`` og ``||variables: Svinge||``, trenger vi å gjøre en omregning for å fikse dette problemet. Finn forholdstallet mellom de to tilfellene og gang det med verdien som variablene mottar.
 
-Finn ut hvilket tall du må gange ``||variables: value||`` med for at hastigheten til bilen skal bli riktig.
-
-|   Helningsvinkel   ||||||   Hastighet   |
-| :------------: |||||| :------------: |
-| -45 |||||| 1023 |
-| 0 |||||| 0 |
-| 45 |||||| -1023 |
+| Helningsvinkel |||||| Kjør/Svinge |
+| :------------: |||||| :---------: |
+|      -45       ||||||     1023    |
+|       0        ||||||      0      |
+|       45       ||||||    -1023    |
 
 ```blocks
-let PåAv_Bil = 0
-let Venstre = 0
-let Høyre = 0
+let AvPå_Bil = 0
 let Kjør = 0
+let Svinge = 0
 radio.onReceivedValue(function (name, value) {
     if (name == "P") {
-        PåAv_Bil = value
-    } else if (name == "A") {
-        Venstre = value
-    } else if (name == "B") {
-        Høyre = value
-    } else if (name == "H") {
         Kjør = value * -22.7
+    } else if (name == "A") {
+        AvPå_Bil = value
+    } else if (name == "R") {
+        Svinge = value * -22.7
     }
 })
 ```
@@ -208,30 +201,41 @@ basic.forever(function () {
 
 ## Steg 11
 
-### Få bilen til å svinge
+### Styre bit:bot-bilen
 
-Inni ``||functions: BitBot_Bilen||``, hvis ``||variables: PåAv_Bil||`` = 1:
+Inni ``||functions: BitBot_Bilen||`` hvis ``||variables: PåAv_Bil||`` er lik 1:
 
-- ``||logic: Hvis||`` ``||variables: Venstre||`` = 1, kjør ``||arrays: høyre motor||`` med farten vi får fra ``||variables: Kjør||``, og ``||arrays: venstre motor||`` med farten vi får fra ``||variables: Kjør||`` ``||math: * -1||``.
-- ``||logic: Hvis||`` ``||variables: Høyre||`` = 1, kjør ``||arrays: venstre motor||`` med farten vi får fra ``||variables: Kjør||``, og ``||arrays: høyre motor||`` med farten vi får fra ``||variables: Kjør||`` ``||math: * -1||``.
-- ``||logic: Ellers||``, kjør ``||arrays: begge motorene||`` med farten vi får fra ``||variables: Kjør||``.
+For å kunne styre hver motor individuelt, må vi gjøre en justering av hver motor ut ifra hvor mye fjernkontrollen helles til ``||input: Høyre-Venstre||``. Vi må lage to nye variabler: ``||variables: Venstrejustering||`` og ``||variables: Høyrejustering||``, for å justere hver av motorene, og sett de til å være ``||variables: Kjør||``, minus en omregning. 
+
+*(Se i tabellen under hvilke verdier som skal brukes for å justere venstre og høyre motor.)*
+
+|          |||||| Venstrejustering |||||| Høyrejustering |
+| :------- |||||| :--------------: |||||| :------------: |
+| Regn om: ||||||      Svinge      ||||||     Svinge     |
+| Fra Lav: ||||||        0         ||||||       0        |
+| Fra Høy: ||||||      1023        ||||||    -1023       |
+| Til Lav: ||||||      Kjør        ||||||     Kjør       |
+| Til Høy: ||||||    Kjør ⋅ -1     ||||||   Kjør ⋅ -1    |
+
 
 ```blocks
 function BitBot_Bilen () {
     let PåAv_Bil = 0
-    let Venstre = 0
-    let Høyre = 0
-    let Kjør = 0
     if (PåAv_Bil == 1) {
-        if (Venstre == 1) {
-            bitbot.motor(BBMotor.Right, Kjør)
-            bitbot.motor(BBMotor.Left, Kjør * -1)
-        }else if (Venstre == 1) {
-            bitbot.motor(BBMotor.Left, Kjør)
-            bitbot.motor(BBMotor.Right, Kjør * -1)
-        } else {
-            bitbot.motor(BBMotor.Both, Kjør)
-        }
+    	Venstrejustering = Kjør - pins.map(
+        Svinge,
+        0,
+        1023,
+        Kjør,
+        Kjør * -1
+        )
+        Høyrejustering = Kjør - pins.map(
+        Svinge,
+        0,
+        -1023,
+        Kjør,
+        Kjør * -1
+        )
     } else {
         bitbot.motor(BBMotor.Both, 0)
     }
@@ -241,7 +245,46 @@ basic.forever(function () {
 })
 ```
 
+
 ## Steg 12
+
+### Styre bit:bot-bilen
+
+Nederst inni ``||functions: BitBot_Bilen||`` hvis ``||variables: PåAv_Bil||`` er lik 1:
+
+- Kjør ``||arrays: venstre motor||`` med farten ``||variables: Kjør||`` minus (-) ``||variables: Venstrejustering||``.
+- Kjør ``||arrays: høyre motor||`` med farten ``||variables: Kjør||`` minus (-) ``||variables: Høyrejustering||``.
+
+```blocks
+function BitBot_Bilen () {
+    let PåAv_Bil = 0
+    if (PåAv_Bil == 1) {
+    	Venstrejustering = Kjør - pins.map(
+        Svinge,
+        0,
+        1023,
+        Kjør,
+        Kjør * -1
+        )
+        Høyrejustering = Kjør - pins.map(
+        Svinge,
+        0,
+        -1023,
+        Kjør,
+        Kjør * -1
+        )
+        bitbot.motor(BBMotor.Left, Kjør - Venstrejustering)
+        bitbot.motor(BBMotor.Right, Kjør - Høyrejustering)
+    } else {
+        bitbot.motor(BBMotor.Both, 0)
+    }
+}
+basic.forever(function () {
+    BitBot_Bilen()
+})
+```
+
+## Steg 13
 
 ### Sette opp lys på bilen
 
@@ -254,71 +297,67 @@ Når du er ferdig med det, ``||math: Last ned||`` koden til begge micro:bitene, 
 *(Se hint for hvordan komplett kode ser ut.)*
 
 ```blocks
-let PåAv = 0
-let Knapp_A = 0
-let Knapp_B = 0
-let Hastighet = 0
-let PåAv_Bil = 0
-let Venstre = 0
-let Høyre = 0
+let Høyrejustering = 0
+let Svinge = 0
 let Kjør = 0
+let Venstrejustering = 0
+let AvPå_Bil = 0
+let AvPå = 0
+let Roll = 0
+let Pitch = 0
 radio.setGroup(1)
-bitbot.ledRainbow()
 basic.forever(function () {
     Fjernkontroll()
-    SendInfo()
     BitBot_Bilen()
 })
-function Fjernkontroll() {
-    Hastighet = input.rotation(Rotation.Pitch)
-    if (input.buttonIsPressed(Button.A)) {
-        Knapp_A = 1
-    } else {
-        Knapp_A = 0
-    }
-    if (input.buttonIsPressed(Button.B)) {
-        Knapp_B = 1
-    } else {
-        Knapp_B = 0
-    }
+function Fjernkontroll () {
+    Pitch = input.rotation(Rotation.Pitch)
+    Roll = input.rotation(Rotation.Roll)
+    radio.sendValue("P", Pitch)
+    radio.sendValue("A", AvPå)
+    radio.sendValue("R", Roll)
 }
-function SendInfo() {
-    radio.sendValue("P", PåAv)
-    radio.sendValue("A", Knapp_A)
-    radio.sendValue("B", Knapp_B)
-    radio.sendValue("H", Hastighet)
-}
-radio.onReceivedValue(function (name, value) {
-    if (name == "P") {
-        PåAv_Bil = value
-    } else if (name == "A") {
-        Venstre = value
-    } else if (name == "B") {
-        Høyre = value
-    } else if (name == "H") {
-        Kjør = value * -22.7
+input.onButtonPressed(Button.AB, function () {
+    if (AvPå == 0) {
+        AvPå = 1
+    } else {
+        AvPå = 0
     }
 })
-function BitBot_Bilen() {
-    if (PåAv_Bil == 1) {
-        let Kjør = 0
-        let Venstre = 0
-        if (Venstre == 1) {
-            bitbot.motor(BBMotor.Right, Kjør)
-            bitbot.motor(BBMotor.Left, Kjør * -1)
-        } else if (Venstre == 1) {
-            bitbot.motor(BBMotor.Left, Kjør)
-            bitbot.motor(BBMotor.Right, Kjør * -1)
-        } else {
-            bitbot.motor(BBMotor.Both, Kjør)
-        }
+radio.onReceivedValue(function (name, value) {
+    if (name == "P") {
+        Kjør = value * -22.7
+    } else if (name == "A") {
+        AvPå_Bil = value
+    } else if (name == "R") {
+        Svinge = value * -22.7
+    }
+})
+function BitBot_Bilen () {
+    if (AvPå_Bil == 1) {
+        Venstrejustering = Kjør - pins.map(
+        Svinge,
+        0,
+        1023,
+        Kjør,
+        Kjør * -1
+        )
+        Høyrejustering = Kjør - pins.map(
+        Svinge,
+        0,
+        -1023,
+        Kjør,
+        Kjør * -1
+        )
+        bitbot.motor(BBMotor.Left, Kjør - Venstrejustering)
+        bitbot.motor(BBMotor.Right, Kjør - Høyrejustering)
     } else {
         bitbot.motor(BBMotor.Both, 0)
     }
 }
 ```
 
-## Steg 13
+## Steg 14
 
 ### Legger med ekstra blokker her...
 
