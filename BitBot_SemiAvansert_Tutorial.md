@@ -362,5 +362,5 @@ bitbot.ledRotate()
 ```
 
 ```package
-BitBot=github:4tronix/bitbot#1.5.2
+bitbot=github:4tronix/bitbot#1.5.2
 ```
