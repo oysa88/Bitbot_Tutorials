@@ -1,10 +1,8 @@
 # BitBot SemiAvansert - Tutorial
 
-### @diffs true
-
 ## Steg 1 @unplugged
 
-### SemiAvansert Bitbot med hastighetsjustering
+### SemiAvansert Bitbot med hastighetsjustering 
 
 I denne veiledningen skal dere lage et program som skal brukes på to micro:biter: En som skal brukes som fjernkontroll og en som skal styre bil:bit-bilen.
 
@@ -57,7 +55,7 @@ basic.forever(function () {
 
 ## Steg 5
 
-### Sette opp kontroll av knappene
+### Sette opp kontroll av knappene @diffs true
 
 Vi skal bruke ``||input: knapp A||`` for å få bilen til å svinge til venstre og ``||input: knapp B||`` for å svinge til høyre.
 
@@ -184,7 +182,7 @@ radio.onReceivedValue(function (name, value) {
 ```
 ## Steg 10
 
-### Omregning mellom helningsvinkel og hastighet
+### Omregning mellom helningsvinkel og hastighet @diffs true
 
 For variabelen ``||variables: Kjør||`` som mottar verdien til helningsvinkelen til fjernkontrollen, trenger vi å gjøre en omregning. 
 
@@ -240,7 +238,7 @@ basic.forever(function () {
 
 ## Steg 12
 
-### Få bilen til å svinge
+### Få bilen til å svinge @diffs true
 
 Inni ``||functions: BitBot_Bilen||``, hvis ``||variables: PåAv_Bil||`` = 1:
 
