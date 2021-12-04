@@ -15,7 +15,7 @@ I denne veiledningen skal dere lage et program som skal brukes på to micro:bite
 
 ### Lage fjernkontroll for å styre bit:BitBot
 
-Vi skal starte å lage fjernkontrollen som skal styre bilen. Vi skal bruke helningsvinkelen til micro:biten for å få bilen til å kjøre fremover eller bakover. Også skal vi bruke knapp A og B for å svinge bit:bot.
+Vi skal starte å lage fjernkontrollen som skal styre bilen. Vi skal bruke helningsvinkelen til micro:biten for å få bilen til å kjøre forover eller bakover. Også skal vi bruke knapp A og B for å svinge bit:bot.
 
 ![microbit-pitch-500px.png](https://i.postimg.cc/136y9LqT/microbit-pitch-500px.png)
 
@@ -64,12 +64,12 @@ basic.forever(function () {
 
 Utvid ``||logic: hvis-betingelse||`` med pluss-tegnet så vi har plass til 5 betingelser.
 
-Vi skal nå lage funksjonen som lar bilen kjøre fremover eller bakover. For å få til det, skal vi bruke blokken ``||input: helningsvinkel fremover-bakover.||``.
+Vi skal nå lage funksjonen som lar bilen kjøre forover eller bakover. For å få til det, skal vi bruke blokken ``||input: helningsvinkel forover-bakover.||``.
 
-Vinkelen til fjernkontrollen blir negativ når vi heller den fremover og positiv når vi heller den bakover. Vi setter en terskelverdi på 30 grader for at bilen skal starte å kjøre.
+Vinkelen til fjernkontrollen blir negativ når vi heller den forover og positiv når vi heller den bakover. Vi setter en terskelverdi på 30 grader for at bilen skal starte å kjøre.
 
-- ``||logic: Hvis||`` ``||input: helningsvinkel fremover-bakover.||`` er mindre enn (<) -30 grader, send ``||radio: radiotall = 3||`` for å la bilen kjøre fremover.
-- ``||logic: Hvis||`` ``||input: helningsvinkel fremover-bakover.||`` er større enn (>) +30 grader, send ``||radio: radiotall = 4||`` for å la bilen kjøre bakover.
+- ``||logic: Hvis||`` ``||input: helningsvinkel forover-bakover.||`` er mindre enn (<) -30 grader, send ``||radio: radiotall = 3||`` for å la bilen kjøre forover.
+- ``||logic: Hvis||`` ``||input: helningsvinkel forover-bakover.||`` er større enn (>) +30 grader, send ``||radio: radiotall = 4||`` for å la bilen kjøre bakover.
 
 Under ``||logic: ellers||`` send ``||radio: radiotall = 0||``. *Dette gjør vi for å si ifra til bilen at ingen av funksjonene på fjernkontrollen er i bruk. Da skal bilen stå i ro.*
 
@@ -109,9 +109,9 @@ Inne i blokken ``||radio: når radio mottar "ReceivedNumber"||``: Lag en ``||log
 
 - ``||logic: Hvis||`` ``||radio: ReceivedNumber = 1||``, ``||arrays: snu til venstre med fart||`` 60%-100%.
 - ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 2||``, ``||arrays: snu til høyre med fart||`` 60%-100%.
-- ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 3||``, ``||arrays: kjør fremover med fart||`` 60%-100%.
+- ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 3||``, ``||arrays: kjør forover med fart||`` 60%-100%.
 - ``||logic: Ellers hvis||`` ``||radio: ReceivedNumber = 4||``, ``||arrays: kjør bakover med fart||`` 60%-100%.
-- ``||logic: Ellers||``, ``||arrays: kjør fremover med fart||`` 0%.
+- ``||logic: Ellers||``, ``||arrays: kjør forover med fart||`` 0%.
 
 ```blocks
 radio.onReceivedNumber(function (receivedNumber) {
