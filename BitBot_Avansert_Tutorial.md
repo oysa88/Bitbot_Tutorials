@@ -181,7 +181,7 @@ radio.onReceivedValue(function (name, value) {
 
 ### Styre Bit:Bot i egen funksjon
 
-Lag ``||functions: funksjonen||`` "BitBot_Bilen". Inni funksjonen: La bilen kun få lov til å kjøre hvis ``||variables: PåAv_Bil||`` er lik 1. Ellers skal vi kjøre ``||arrays: begge motorene||`` med fart 0.
+Lag ``||functions: funksjonen||`` "BitBot_Bilen". Inni funksjonen: La bilen kun få lov til å kjøre hvis ``||variables: PåAv_Bil||`` er lik 1. Ellers skal vi kjøre ``||bitbot: begge motorene||`` med fart 0.
 
 Kall opp ``||functions: BitBot_Bilen||`` fra blokken ``||basic: gjenta for alltid||``.
 
@@ -252,8 +252,8 @@ basic.forever(function () {
 
 Nederst inni ``||functions: BitBot_Bilen||`` hvis ``||variables: PåAv_Bil||`` er lik 1:
 
-- Kjør ``||arrays: venstre motor||`` med farten ``||variables: Kjør||`` minus (-) ``||variables: Venstrejustering||``.
-- Kjør ``||arrays: høyre motor||`` med farten ``||variables: Kjør||`` minus (-) ``||variables: Høyrejustering||``.
+- Kjør ``||bitbot: venstre motor||`` med farten ``||variables: Kjør||`` minus (-) ``||variables: Venstrejustering||``.
+- Kjør ``||bitbot: høyre motor||`` med farten ``||variables: Kjør||`` minus (-) ``||variables: Høyrejustering||``.
 
 ```blocks
 function BitBot_Bilen () {

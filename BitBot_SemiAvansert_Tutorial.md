@@ -218,7 +218,7 @@ radio.onReceivedValue(function (name, value) {
 
 ### Styre Bit:Bot i egen funksjon
 
-Lag ``||functions: funksjonen||`` "BitBot_Bilen". Inni funksjonen: La bilen kun få lov til å kjøre hvis ``||variables: PåAv_Bil||`` er lik 1. Ellers skal vi kjøre ``||arrays: begge motorene||`` med fart 0.
+Lag ``||functions: funksjonen||`` "BitBot_Bilen". Inni funksjonen: La bilen kun få lov til å kjøre hvis ``||variables: PåAv_Bil||`` er lik 1. Ellers skal vi kjøre ``||bitbot: begge motorene||`` med fart 0.
 
 Kall opp ``||functions: BitBot_Bilen||`` fra blokken ``||basic: gjenta for alltid||``.
 
@@ -242,9 +242,9 @@ basic.forever(function () {
 
 Inni ``||functions: BitBot_Bilen||``, hvis ``||variables: PåAv_Bil||`` = 1:
 
-- ``||logic: Hvis||`` ``||variables: Venstre||`` = 1, kjør ``||arrays: høyre motor||`` med farten vi får fra ``||variables: Kjør||``, og ``||arrays: venstre motor||`` med farten vi får fra ``||variables: Kjør||`` ``||math: * -1||``.
-- ``||logic: Hvis||`` ``||variables: Høyre||`` = 1, kjør ``||arrays: venstre motor||`` med farten vi får fra ``||variables: Kjør||``, og ``||arrays: høyre motor||`` med farten vi får fra ``||variables: Kjør||`` ``||math: * -1||``.
-- ``||logic: Ellers||``, kjør ``||arrays: begge motorene||`` med farten vi får fra ``||variables: Kjør||``.
+- ``||logic: Hvis||`` ``||variables: Venstre||`` = 1, kjør ``||bitbot: høyre motor||`` med farten vi får fra ``||variables: Kjør||``, og ``||bitbot: venstre motor||`` med farten vi får fra ``||variables: Kjør||`` ``||math: * -1||``.
+- ``||logic: Hvis||`` ``||variables: Høyre||`` = 1, kjør ``||bitbot: venstre motor||`` med farten vi får fra ``||variables: Kjør||``, og ``||bitbot: høyre motor||`` med farten vi får fra ``||variables: Kjør||`` ``||math: * -1||``.
+- ``||logic: Ellers||``, kjør ``||bitbot: begge motorene||`` med farten vi får fra ``||variables: Kjør||``.
 
 ```blocks
 function BitBot_Bilen () {
