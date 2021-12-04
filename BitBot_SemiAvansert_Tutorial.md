@@ -55,7 +55,7 @@ basic.forever(function () {
 
 ## Steg 5
 
-### Sette opp kontroll av knappene @diffs true
+### Sette opp kontroll av knappene
 
 Vi skal bruke ``||input: knapp A||`` for å få bilen til å svinge til venstre og ``||input: knapp B||`` for å svinge til høyre.
 
@@ -182,7 +182,7 @@ radio.onReceivedValue(function (name, value) {
 ```
 ## Steg 10
 
-### Omregning mellom helningsvinkel og hastighet @diffs true
+### Omregning mellom helningsvinkel og hastighet
 
 For variabelen ``||variables: Kjør||`` som mottar verdien til helningsvinkelen til fjernkontrollen, trenger vi å gjøre en omregning. 
 
@@ -238,7 +238,7 @@ basic.forever(function () {
 
 ## Steg 12
 
-### Få bilen til å svinge @diffs true
+### Få bilen til å svinge
 
 Inni ``||functions: BitBot_Bilen||``, hvis ``||variables: PåAv_Bil||`` = 1:
 
