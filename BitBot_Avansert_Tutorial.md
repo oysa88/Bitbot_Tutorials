@@ -129,9 +129,9 @@ Vi er nå klare for å lage den delen av koden som skal styre bit:bot-bilen!
 
 Inne i blokken ``||radio: når radio mottar "name" value||``: Lag en hvis-betingelse som sjekker opp bokstavene vi sendte fra fjernkontrollen. Vi skal lage 3 nye variabler som kan huske verdiene vi sendte. Disse må koble sammen med riktig navn og verdi.
 
-- ``||logic: Hvis||`` "name" = P, sett ``||variables: Pitch||`` til "``||variables: value||``.
-- ``||logic: Hvis||`` "name" = A, sett ``||variables: AvPå||`` til "``||variables: value||``.
-- ``||logic: Hvis||`` "name" = R, sett ``||variables: Roll||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = P, sett ``||variables: Kjør||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = A, sett ``||variables: AvPå_Bil||`` til "``||variables: value||``.
+- ``||logic: Hvis||`` "name" = R, sett ``||variables: Svinge||`` til "``||variables: value||``.
 
 
 ```blocks
