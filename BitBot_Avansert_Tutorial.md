@@ -1,5 +1,6 @@
 # BitBot Avansert - Tutorial
 
+### @ diffs true
 
 ## Steg 1 @unplugged
 
