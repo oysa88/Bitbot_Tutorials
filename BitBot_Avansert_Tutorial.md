@@ -1,6 +1,5 @@
 # BitBot Avansert - Tutorial
 
-### @diffs true
 
 ## Steg 1 @unplugged
 
@@ -286,7 +285,7 @@ basic.forever(function () {
 
 ## Steg 13
 
-### Sette opp lys på bilen @diffs false
+### Sette opp lys på bilen
 
 Legg til lys på BitBot-bilen slik du ønsker det!
 
